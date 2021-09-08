@@ -1,9 +1,9 @@
 class CreateTickets < ActiveRecord::Migration[6.0]
   def change
     create_table :tickets do |t|
-      t.string      :ticket_code,     null: false
-      t.string      :request_code,    null: false
-      t.string      :url,             null: false
+      t.string      :ticket_code,     null: false, unique: true
+      t.string      :request_code,    null: false, unique: true
+      t.string      :url,             null: false, unique: true
       t.string      :status,          null: false
 
       t.datetime    :available_begin
