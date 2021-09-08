@@ -1,9 +1,9 @@
 class GajoenApi
-  def self.create_tickets(brand_id, item_id, request_code)
+  def self.issue_tickets(brand_id, item_id, request_code)
     params = {
-        :brand_id => brand_id,
-        :item_id => item_id,
-        :request_code => request_code
+        brand_id:       brand_id,
+        item_id:        item_id,
+        request_code:   request_code
     }
 
     uri = URI.parse("https://channel-api.stg.e-gift.giftee-saas.co/brands/" + brand_id.to_s + "/tickets")
