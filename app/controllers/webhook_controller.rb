@@ -56,12 +56,12 @@ class WebhookController < ApplicationController
                   
                   Profile.create!(birthday: birthday, sex: sex, customer_id: customer.id)
 
-                  item = Item.find_by(detail_use: "初回登録")
+                  item = Item.find_by(detail_use: "会員登録")
                   request_code = SecureRandom.urlsafe_base64(30)
                   tickets = GajoenApi.issue_tickets(item.brand_id, item.item_id, request_code)
                   LineApi.push_message(line_user_id, message)
                   ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
-                  output_message = "会員登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
+                  output_message = "会員登録ありがとうございました！チケットはこちらになります。ぜひご利用ください！\n" + tickets['url']
                   LineApi.reply_message(event['replyToken'], output_message)
                 end  
               else
