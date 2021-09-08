@@ -1,7 +1,7 @@
 require 'line/bot'
 
-class LineApi < ApplicationRecord
-  def self.get_user_name(user_id)
+class LineApi
+  def self.get_profile(user_id)
     uri = URI.parse("https://api.line.me/v2/bot/profile/" + user_id)
     req = Net::HTTP::Get.new(uri.path, {'Content-Type' => 'application/json'})
     req['Authorization'] = "Bearer "+ ENV['LINE_CHANNEL_TOKEN']
@@ -12,10 +12,10 @@ class LineApi < ApplicationRecord
     https.verify_mode = OpenSSL::SSL::VERIFY_NONE
     res = https.request(req)
 
-    JSON.parse(res.body)['displayName']
+    JSON.parse(res.body)
   end
 
-  def self.message_push(user_id, message)
+  def self.push_message(user_id, message)
     client = Line::Bot::Client.new { |config|
       config.channel_secret = ENV['LINE_CHANNEL_SECRET']
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
@@ -25,6 +25,6 @@ class LineApi < ApplicationRecord
       text: message
     }
 
-    response = client.push_message(user_id, message_push)
+    client.push_message(user_id, message_push)
   end
 end
