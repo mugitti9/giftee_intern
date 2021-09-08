@@ -46,10 +46,10 @@ class WebhookController < ApplicationController
       :ticket_code      =>  params['code'],
       :request_code     =>  request_code,
       :url              =>  params['url'],
-      :status           =>  "issued",
+      :status           =>  params['status'],
 
-      :available_begin  =>  params['activatable_begin'],
-      :available_end    =>  params['activatable_end'],
+      :available_begin  =>  Time.at(params['available_begin']),
+      :available_end    =>  Time.at(params['available_end']),
       :customer_id      =>  id,
     }
   end
