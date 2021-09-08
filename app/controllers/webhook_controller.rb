@@ -34,7 +34,7 @@ class WebhookController < ApplicationController
             ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
             message = "登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
             LineApi.push_message(line_user_id, message)
-          rescue ActiveRecord::RecordInvalid
+          rescue
             false
           end
         end
