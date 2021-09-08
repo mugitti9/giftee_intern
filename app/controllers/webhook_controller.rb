@@ -28,11 +28,11 @@ class WebhookController < ApplicationController
 
           # 登録完了後のチケットを送る
           item = Item.find_by(detail_use: "初回登録")
-          tickets = GajoenApi.get_tickets(item.brand_id, item.item_id)
+          request_code = SecureRandom.urlsafe_base64(30)
+          tickets = GajoenApi.create_tickets(item.brand_id, item.item_id, request_code)
+          ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
           message = "登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
           LineApi.push_message(line_user_id, message)
-          tickets['request_code']
-          ticket = Ticket.create!(create_ticket_prams(tickets, customer.id))
         end
       end
     }
@@ -41,10 +41,10 @@ class WebhookController < ApplicationController
 
   private
 
-  def create_ticket_prams(params, id)
+  def create_ticket_prams(params, id, request_code)
     {
       :ticket_code      =>  params['code'],
-      :request_code     =>  params['request_code'],
+      :request_code     =>  request_code,
       :url              =>  params['url'],
       :status           =>  "issued",
 
