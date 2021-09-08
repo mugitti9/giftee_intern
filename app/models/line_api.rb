@@ -25,6 +25,6 @@ class LineApi
       text: message
     }
 
-    response = client.push_message(user_id, message_push)
+    client.push_message(user_id, message_push)
   end
 end

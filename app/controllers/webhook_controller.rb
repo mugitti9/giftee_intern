@@ -21,12 +21,11 @@ class WebhookController < ApplicationController
     events.each { |event|
       case event
       when Line::Bot::Event::Follow
-        user_id = event['source']['userId']
-        if !(Customer.exists?(user_id: user_id)) && user_id.present?
-          name = LineApi.get_user_name(user_id)['displayName']
-          customer = Customer.new(name: name, user_id: user_id)
-          customer.save
-          LineApi.push_message(user_id, '登録ありがとう！')
+        line_user_id = event['source']['userId']
+        if !Customer.exists?(line_user_id: line_user_id) && line_user_id.present?
+          name = LineApi.get_user_name(line_user_id)['displayName']
+          Customer.create!(name: name, line_user_id: line_user_id)
+          LineApi.push_message(line_user_id, '登録ありがとう！')
         end
       end
     }
