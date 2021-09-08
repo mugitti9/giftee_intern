@@ -34,8 +34,6 @@ class WebhookController < ApplicationController
             ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
             message = "登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
             LineApi.push_message(line_user_id, message)
-          rescue
-            false
           end
         end
       end
@@ -51,9 +49,8 @@ class WebhookController < ApplicationController
       request_code:     request_code,
       url:              params['url'],
       status:           params['status'],
-
-      available_begin:  Time.at(params['available_begin']),
-      available_end:    Time.at(params['available_end']),
+      available_begin:  Time.zone.at(params['available_begin']),
+      available_end:    Time.zone.at(params['available_end']),
       customer_id:      id,
     }
   end
