@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_13_112934) do
+ActiveRecord::Schema.define(version: 2021_09_07_072401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "brand_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "ticket_code", null: false
+    t.string "request_code", null: false
+    t.string "url", null: false
+    t.string "status", null: false
+    t.datetime "available_begin", null: false
+    t.datetime "available_end", null: false
+    t.datetime "exchanged_at", null: false
+    t.datetime "disabled_at", null: false
+    t.bigint "customer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_tickets_on_customer_id"
+  end
 
   create_table "widgets", force: :cascade do |t|
     t.string "name"
@@ -23,4 +52,5 @@ ActiveRecord::Schema.define(version: 2020_02_13_112934) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "tickets", "customers"
 end
