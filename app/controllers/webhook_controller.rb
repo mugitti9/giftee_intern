@@ -24,11 +24,33 @@ class WebhookController < ApplicationController
         line_user_id = event['source']['userId']
         if !Customer.exists?(line_user_id: line_user_id) && line_user_id.present?
           name = LineApi.get_profile(line_user_id)['displayName']
-          Customer.create!(name: name, line_user_id: line_user_id)
-          LineApi.push_message(line_user_id, '登録ありがとう！')
+          customer = Customer.create!(name: name, line_user_id: line_user_id)
+
+          # 登録完了後のチケットを送る
+          item = Item.find_by(detail_use: "初回登録")
+          tickets = GajoenApi.get_tickets(item.brand_id, item.item_id)
+          message = "登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
+          LineApi.push_message(line_user_id, message)
+          tickets['request_code']
+          ticket = Ticket.create!(create_ticket_prams(tickets, customer.id))
         end
       end
     }
     head :ok
+  end
+
+  private
+
+  def create_ticket_prams(params, id)
+    {
+      :ticket_code      =>  params['code'],
+      :request_code     =>  params['request_code'],
+      :url              =>  params['url'],
+      :status           =>  "issued",
+
+      :available_begin  =>  params['activatable_begin'],
+      :available_end    =>  params['activatable_end'],
+      :customer_id      =>  id,
+    }
   end
 end
