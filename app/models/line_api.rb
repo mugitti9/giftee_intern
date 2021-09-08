@@ -1,7 +1,7 @@
 require 'line/bot'
 
 class LineApi
-  def self.get_user_name(user_id)
+  def self.get_profile(user_id)
     uri = URI.parse("https://api.line.me/v2/bot/profile/" + user_id)
     req = Net::HTTP::Get.new(uri.path, {'Content-Type' => 'application/json'})
     req['Authorization'] = "Bearer "+ ENV['LINE_CHANNEL_TOKEN']

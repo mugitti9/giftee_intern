@@ -23,7 +23,7 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Follow
         line_user_id = event['source']['userId']
         if !Customer.exists?(line_user_id: line_user_id) && line_user_id.present?
-          name = LineApi.get_user_name(line_user_id)['displayName']
+          name = LineApi.get_profile(line_user_id)['displayName']
           Customer.create!(name: name, line_user_id: line_user_id)
           LineApi.push_message(line_user_id, '登録ありがとう！')
         end
