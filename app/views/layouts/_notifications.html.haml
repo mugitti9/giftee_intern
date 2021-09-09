@@ -1,0 +1,9 @@
+.notification.uk-width-2-3@m.uk-margin-auto
+  - flash.each do |key, value|
+    = content_tag :div, value, class: key
+  / flashはハッシュ形式のオブジェクト
+  / flashには標準で notice（動作成功時）とalert（動作失敗時）の2つのキーを生成してくれるため、両方に適用できるようにeachメソッドを使ってkeyとvalueを取り出しています。上はeachメソッドのハッシュオブジェクトに対しての特殊な使い方。
+  / content_tagはHTMLタグを生成することができ、第一引数にタグ、第二引数に内容、第三引数にオプション（ classなど）を設定
+  / class: keyの keyはeach文のkey。これによって、alertかnoticeによってcssの反映を分けられる。
+
+/ コントローラーなどでflash[:notice] = "表示したい内容" のように記述することで、flashオブジェクトのnoticeキーのバリューを設定できます。

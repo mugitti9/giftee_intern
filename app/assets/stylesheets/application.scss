@@ -1,0 +1,85 @@
+@import "scaffolds";
+@import "scsportal-uikit";
+@import "colors";
+@import "header";
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require font-awesome
+ *= require_tree .
+ *= require_self
+
+ */
+ @import "flex_settings";
+
+*{
+	box-sizing: border-box;
+	margin: 0;
+	color: $neutral_color;
+	-webkit-appearance: none;
+  	-moz-appearance: none;
+  	appearance: none;
+}
+
+// ==== ここから別ファイルに切り分け予定（_basic_settings.scss)
+
+// 要素のクラスにbeltを追加すると親要素と幅を揃えてPaddingを設定します
+.belt{
+	width:100%;
+	padding: 0 20px;
+}
+
+// ==== _basic_settings.scss ここまで
+
+
+
+form{
+	width:100%;
+	padding:0px;
+}
+.background{background-color: #eef}
+
+// FOOTER設定用Style
+footer{
+	height:20vh;
+	background-color: $neutral_color;
+	font-family: 'Share Tech';
+	padding: 24px 0;
+	flex-shrink: 0;
+	#footer-text{
+		text-align: center;
+		color: $main_color;
+		margin: 20px 0;
+	}
+}
+
+
+// footer下に固定用
+.content{
+	min-height: calc(100vh - 10vh - 20vh);
+	position: relative;
+}
+
+.page-title{
+	margin-top: 32px;
+	margin-bottom: 16px;
+}
+
+.hidden{
+	display: none;
+}
+
+.clearfix:after {
+  clear: both;
+  content: '';
+  display: block;
+}

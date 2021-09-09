@@ -1,0 +1,26 @@
+%header.portal-header.flex-start.belt
+	#header-left.icon.flex-center
+	#header-center.grow.flex-center
+		=link_to "Planet Cafe", root_path, class: "text"
+	#header-right.icon.flex-center
+		%button.uk-icon{ 'uk-icon': 'grid', ratio: 1.6, style: 'fill:white'}
+		%div{'uk-dropdown': 'mode: click', style: 'background-color:#F5F5F5'}
+			%ul.uk-nav.uk-dropdown-nav
+				%ul.uk-nav-sub
+					%li.uk-margin-small-top
+						%a{href: '/mics/new'}
+							%span.uk-margin-small-right{'uk-icon': 'users'}
+							登録者一覧
+					%li.uk-margin-small-top
+						%a{href: '/room_usages'}
+							%span.uk-margin-small-right{'uk-icon': 'database'}
+							チケット使用統計
+					%li.uk-margin-small-top
+						%a{href: '/room_usages'}
+							%span.uk-margin-small-right{'uk-icon': 'album'}
+							配信済み・予定チケット一覧
+					%li.uk-margin-small-top
+						%a{href: '/room_usages'}
+							%span.uk-margin-small-right{'uk-icon': 'push'}
+							チケット発行・送信
+.portal-header-fix

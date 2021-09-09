@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{content: "width=device-width,initial-scale=1.0,maximum-scale=1.0", name: "viewport"}
+    = display_meta_tags site: 'Planet Cafe'
+    = csrf_meta_tags
+    = csp_meta_tag
+    = favicon_link_tag('/favicon.png')
+    %link{href:"https://fonts.googleapis.com/css?family=Share+Tech", rel:"stylesheet"}
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+  %body
+    = render 'layouts/portal_header'
+
+    .uk-padding-small.background.content
+      .uk-margin-small{style:'overflow:hidden;'}
+        = render 'layouts/notifications'
+      .uk-width-2-3@m.uk-margin-auto.uk-card.uk-card-default
+        = yield
+    = render 'layouts/footer'
