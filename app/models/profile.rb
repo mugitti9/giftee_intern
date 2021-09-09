@@ -1,5 +1,5 @@
 class Profile < ApplicationRecord
     belongs_to   :customer
 
-    enum sex: { 男: 0, 女: 1 }
+    enum sex: { male: 0, female: 1 }
 end

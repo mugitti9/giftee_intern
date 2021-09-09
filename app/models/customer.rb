@@ -1,4 +1,4 @@
 class Customer < ApplicationRecord
-  has_many  :ticket
+  has_many  :tickets
   has_one   :profile
 end

@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_075830) do
 
   create_table "profiles", force: :cascade do |t|
     t.integer "sex", null: false
-    t.datetime "birthday", null: false
+    t.date "birthday", null: false
     t.bigint "customer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
