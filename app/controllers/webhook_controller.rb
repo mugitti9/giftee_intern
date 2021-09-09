@@ -1,4 +1,5 @@
 require 'line/bot'
+require 'nkf'
 
 class WebhookController < ApplicationController
   protect_from_forgery except: [:callback] # CSRF対策無効化
@@ -35,6 +36,41 @@ class WebhookController < ApplicationController
             message = "登録ありがとうございました！チケットはこちらになります\n" + tickets['url']
             LineApi.push_message(line_user_id, message)
           end
+
+          message = "会員登録をすると更にチケットが貰えます！\n" + "会員登録をするためには、「会員登録　生年月日 性別」(例：会員登録　1999/1/27 男)と入力してください" 
+          LineApi.push_message(line_user_id, message)
+        end
+      when Line::Bot::Event::Message
+        case event.type
+        when Line::Bot::Event::MessageType::Text
+          input_text = event.message['text']
+          output_message = ""
+          if input_text.start_with?("会員登録")
+            begin
+              customer = Customer.find_by(line_user_id: event['source']['userId'])
+              profile = customer.profile
+              if profile.nil?
+                ActiveRecord::Base.transaction do
+                  text_list = input_text.split(/[[:blank:]]+/)
+                  birthday = Time.zone.parse(NKF.nkf('-m0Z1 -w', text_list[1]))
+                  sex = sex_english_to_japanese(text_list[2])
+                  
+                  Profile.create!(birthday: birthday, sex: sex, customer_id: customer.id)
+
+                  item = Item.find_by(detail_use: "会員登録")
+                  request_code = SecureRandom.urlsafe_base64(30)
+                  tickets = GajoenApi.issue_tickets(item.brand_id, item.item_id, request_code)
+                  ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
+                  output_message = "会員登録ありがとうございました！チケットはこちらになります。ぜひご利用ください！\n" + tickets['url']
+                end  
+              else
+                output_message = "すでに会員登録済です"
+              end
+            rescue
+              output_message = "適切な文章を入力して下さい"
+            end
+            LineApi.reply_message(event['replyToken'], output_message)
+          end
         end
       end
     }
@@ -42,6 +78,17 @@ class WebhookController < ApplicationController
   end
 
   private
+
+  def sex_english_to_japanese(params)
+    case params
+    when "男"
+      "male"
+    when "女"
+      "female"
+    else
+      "unknown"
+    end
+  end
 
   def create_ticket_prams(params, id, request_code)
     {
