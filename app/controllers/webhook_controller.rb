@@ -44,7 +44,8 @@ class WebhookController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           input_text = event.message['text']
-          if p input_text.start_with?("会員登録")
+          output_message = ""
+          if input_text.start_with?("会員登録")
             begin
               customer = Customer.find_by(line_user_id: event['source']['userId'])
               profile = customer.profile
@@ -52,17 +53,15 @@ class WebhookController < ApplicationController
                 ActiveRecord::Base.transaction do
                   text_list = input_text.split(/[[:blank:]]+/)
                   birthday = Time.zone.parse(NKF.nkf('-m0Z1 -w', text_list[1]))
-                  sex = text_list[2]
+                  sex = sex_english_to_japanese(text_list[2])
                   
                   Profile.create!(birthday: birthday, sex: sex, customer_id: customer.id)
 
                   item = Item.find_by(detail_use: "会員登録")
                   request_code = SecureRandom.urlsafe_base64(30)
                   tickets = GajoenApi.issue_tickets(item.brand_id, item.item_id, request_code)
-                  LineApi.push_message(line_user_id, message)
                   ticket = Ticket.create!(create_ticket_prams(tickets, customer.id, request_code))
                   output_message = "会員登録ありがとうございました！チケットはこちらになります。ぜひご利用ください！\n" + tickets['url']
-                  LineApi.reply_message(event['replyToken'], output_message)
                 end  
               else
                 output_message = "すでに会員登録済です"
@@ -79,6 +78,17 @@ class WebhookController < ApplicationController
   end
 
   private
+
+  def sex_english_to_japanese(params)
+    case params
+    when "男"
+      "male"
+    when "女"
+      "female"
+    else
+      "unknown"
+    end
+  end
 
   def create_ticket_prams(params, id, request_code)
     {
