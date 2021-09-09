@@ -73,10 +73,25 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.10.0)
+    erubis (2.7.0)
     execjs (2.8.1)
     ffi (1.15.4)
     globalid (0.5.2)
       activesupport (>= 5.0)
+    haml (5.2.2)
+      temple (>= 0.8.0)
+      tilt
+    haml-rails (2.0.1)
+      actionpack (>= 5.1)
+      activesupport (>= 5.1)
+      haml (>= 4.0.6, < 6.0)
+      html2haml (>= 1.0.1)
+      railties (>= 5.1)
+    html2haml (2.2.0)
+      erubis (~> 2.7.0)
+      haml (>= 4.0, < 6)
+      nokogiri (>= 1.6.0)
+      ruby_parser (~> 3.5)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -95,6 +110,8 @@ GEM
     mail (2.7.1)
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
+    meta-tags (2.15.0)
+      actionpack (>= 3.2.0, < 6.2)
     method_source (1.0.0)
     mini_mime (1.1.1)
     mini_portile2 (2.6.1)
@@ -109,6 +126,7 @@ GEM
     pg (0.21.0)
     puma (5.4.0)
       nio4r (~> 2.0)
+    quilljs-rails (0.0.4)
     racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.1.0)
@@ -152,6 +170,8 @@ GEM
       ffi (~> 1.0)
     rdoc (6.3.2)
     ruby2_keywords (0.0.5)
+    ruby_parser (3.17.0)
+      sexp_processor (~> 4.15, >= 4.15.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -164,6 +184,7 @@ GEM
       tilt
     sdoc (2.2.0)
       rdoc (>= 5.0)
+    sexp_processor (4.15.3)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -177,6 +198,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    temple (0.8.2)
     thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -199,12 +221,15 @@ DEPENDENCIES
   bootsnap
   coffee-rails
   dotenv-rails
+  haml-rails
   jbuilder
   jquery-rails
   line-bot-api
   listen
+  meta-tags
   pg (~> 0.18)
   puma
+  quilljs-rails
   rails (~> 6.0.2)
   rails_12factor
   sass-rails
