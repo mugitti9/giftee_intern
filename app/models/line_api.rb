@@ -16,15 +16,30 @@ class LineApi
   end
 
   def self.push_message(user_id, message)
-    client = Line::Bot::Client.new { |config|
+    client = self.create_client
+    message_push = create_send_message(message)
+    client.push_message(user_id, message_push)
+  end
+
+  def self.reply_message(reply_token, message)
+    client = self.create_client
+    message_push = create_send_message(message)
+    client.reply_message(reply_token, message_push)
+  end
+
+  private
+
+  def self.create_client
+    Line::Bot::Client.new { |config|
       config.channel_secret = ENV['LINE_CHANNEL_SECRET']
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
     }
-    message_push={
+  end
+
+  def self.create_send_message(message)
+    {
       type: 'text',
       text: message
     }
-
-    client.push_message(user_id, message_push)
   end
 end
