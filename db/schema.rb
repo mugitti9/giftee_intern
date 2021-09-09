@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_075830) do
 
   create_table "items", force: :cascade do |t|
     t.integer "brand_id", null: false
+    t.string "name", null: false
     t.integer "item_id", null: false
     t.string "detail_use", null: false
     t.datetime "created_at", precision: 6, null: false

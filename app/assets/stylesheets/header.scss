@@ -1,0 +1,54 @@
+.portal-header{
+  position: fixed;
+  height:8vh;
+  font-family: 'Share Tech';
+  background-color: #525884;
+  z-index: 200;
+  .icon{width:50px;}
+  .text{
+    margin:0 auto;
+    text-align:center;
+    font-size:5vh;
+    color: #D8E2FF;
+    text-decoration: none;
+  }
+  &-fix{
+    padding-bottom: 8vh;
+  }
+}
+
+#guest-header{
+  position: relative;
+  height:12vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  color: #fff;
+  &-text{
+    margin: 0 auto;
+    text-align:center;
+    font-family: 'HelveticaNeue-CondensedBlack';
+    font-size:5vh;
+    color: #fff;
+    text-decoration: none;
+    &:visited{
+      color: #fff;
+    }
+  }
+  &-menu{
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    bottom: 0px;
+  }
+  &-subtitle{
+    color: #fff;
+    position: absolute;
+    font-family: 'HelveticaNeue-CondensedBlack';
+    right: 0px;
+    left: 0px;
+    bottom: 4px;
+  }
+}
+
+

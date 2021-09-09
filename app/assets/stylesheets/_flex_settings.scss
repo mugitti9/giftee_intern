@@ -1,0 +1,44 @@
+
+
+
+// 参照URL：https://mamewaza.com/support/blog/howto-use-flex.html
+
+ .flex{
+ 	display:-webkit-flex;
+ 	display:flex;
+ }
+
+//flex box配下の要素に指定。要素を親に合わせて伸縮させます
+ .grow{
+ 	-webkit-flex-grow:1;
+ 	flex-grow:1;
+ }
+
+//要素を均等に配置します
+ .flex-space-between{
+ 	display:-webkit-flex;
+ 	display:flex;
+ 	-webkit-justify-content: flex-space-between;
+    justify-content: flex-space-between;
+ }
+
+//要素を均等に配置し,隙間を埋めます
+ .flex-start{
+ 	display:-webkit-flex;
+ 	display:flex;
+ 	-webkit-justify-content: flex-start;
+    justify-content: flex-start;
+ }
+
+// 子要素を上下中央揃えにする
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 子要素を縦に配置
+.flex-column{
+  flex-direction:flex-column;
+}
+

@@ -43,5 +43,10 @@ gem 'sinatra'
 
 gem 'bootsnap', require: false
 
+gem 'haml-rails'
+gem 'meta-tags'
+gem 'jquery-rails'
+gem "quilljs-rails"
+gem "bootsnap", require: false
 gem 'listen', group: :development
 gem 'dotenv-rails',  group: :development
