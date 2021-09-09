@@ -20,3 +20,8 @@
 
 # Ignore ruby-version
 /.ruby-version
+/.idea
+.DS_Store
+/node_modules
+/public
+/test
